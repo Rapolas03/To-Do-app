@@ -1,2 +1,4 @@
 flask
 flask_sqlalchemy
+types-Flask
+types-Flask-SQLAlchemy
