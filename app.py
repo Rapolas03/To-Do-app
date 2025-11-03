@@ -21,15 +21,24 @@ def register():
         #get form data
         username = request.form.get('username')
         password = request.form.get('password')
+        password2 = request.form.get('password2')
+
+        if password != password2:
+            flash("Password and Confirm Password didn't match!")
+            return redirect(url_for('register'))
 
         #check if username already exists
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
             flash("username already exists!")
             return redirect(url_for('register'))
-        
+
         #password hash
         hashed_password = generate_password_hash(password)
+
+        if password != password2:
+            flash("Password and Confirm Password didn't match!")
+            return redirect(url_for('register'))
 
         #creating new user
         new_user = User(username=username, password=hashed_password)
@@ -41,6 +50,11 @@ def register():
     
     return render_template('register.html')
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+
+    # Render login form or handle login logic
+    return render_template('login.html')
 
 if __name__ == '__main__':
     with app.app_context():
